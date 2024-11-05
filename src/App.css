@@ -1,0 +1,84 @@
+body {
+  background-color: #f8f9fa; /* Color de fondo */
+  font-family: "Arial", sans-serif; /* Fuente general */
+}
+
+.navbar {
+  background-color: #343a40; /* Color de la barra de navegación */
+}
+
+h1,
+h2,
+p,
+label {
+  color: #212529; /* Color de texto */
+}
+
+.form-control {
+  border-radius: 5px; /* Bordes redondeados en inputs */
+}
+
+button {
+  border-radius: 5px; /* Bordes redondeados en botones */
+}
+
+.homepage {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.homepage-overlay {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 15px;
+  max-width: 600px;
+  width: 80%;
+  text-align: center;
+}
+
+.homepage-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.homepage-button {
+  font-size: 1.5rem;
+  padding: 15px 40px;
+  background-color: #d9534f;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+/* Estilos del footer */
+.footer {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.footer-brand {
+  font-size: 2rem;
+  color: #a33;
+  font-weight: bold;
+}
+
+.footer-section-title {
+  color: #a33;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.footer-powered {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.footer-powered .footer-branding {
+  color: #a33;
+  font-weight: bold;
+}
