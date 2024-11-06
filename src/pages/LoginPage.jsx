@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -8,14 +8,19 @@ import "react-toastify/dist/ReactToastify.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // Estado de carga
-  const { setUser } = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
+  const { login, isAuthenticated, user } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (user?.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/profile");
+      }
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,36 +34,18 @@ const LoginPage = () => {
       return;
     }
 
-    if (!validateEmail(email)) {
-      toast.error("El formato del correo electrónico es incorrecto", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-      });
-      return;
-    }
+    setLoading(true);
 
-    setLoading(true); // Activa la carga
-
-    // Simulación de un proceso de inicio de sesión con retardo
-    setTimeout(() => {
-      setUser({
-        name: "Usuario Logueado",
-        email,
-        avatar: null, // O null si el usuario no tiene foto cargada
-        activities: ["Pedido #1", "Pedido #2"], // Simulación de actividades
-      });
-
-      toast.success(`Bienvenido, ${email}`, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        onClose: () => {
-          setLoading(false); // Desactiva la carga
-          navigate("/profile");
-        },
-      });
-    }, 2000); // Simulación de 2 segundos de espera
+    login(email, password).then((success) => {
+      setLoading(false);
+      if (!success) {
+        toast.error("Credenciales incorrectas o usuario sin permisos", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+        });
+      }
+    });
   };
 
   return (

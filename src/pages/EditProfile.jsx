@@ -1,28 +1,24 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
+import { Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 import { AppContext } from "../context/AppContext";
-import { Form, Button, Container } from "react-bootstrap";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const EditProfile = () => {
   const { user, setUser } = useContext(AppContext);
-
-  useEffect(() => {
-    console.log("User data:", user);
-  }, [user]);
-
-  // Redirigir si `user` es null o undefined
-  if (!user) {
-    return <p>Por favor, inicia sesión para editar tu perfil.</p>;
-  }
-
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.email || "");
   const [photo, setPhoto] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSave = (e) => {
     e.preventDefault();
 
+    // Validación de campos obligatorios
+    if (!name || !email) {
+      toast.error("Los campos de nombre y correo son obligatorios.");
+      return;
+    }
+
+    // Actualiza el perfil del usuario
     setUser({
       ...user,
       name,
@@ -30,63 +26,50 @@ const EditProfile = () => {
       avatar: photo ? URL.createObjectURL(photo) : user.avatar,
     });
 
-    toast.success("Perfil actualizado con éxito", {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
+    toast.success("Perfil actualizado exitosamente");
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPhoto(file);
-    }
+    // Limpiar el campo de foto
+    setPhoto(null);
   };
 
   return (
-    <Container className="mt-5">
-      <h1>Editar Perfil</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Nombre</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ingresa tu nombre"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
+    <Form onSubmit={handleSave}>
+      <h4>Editar Perfil</h4>
 
-        <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Label>Correo Electrónico</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Ingresa tu correo"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
+      <Form.Group controlId="formName">
+        <Form.Label>Nombre</Form.Label>
+        <Form.Control
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Ingresa tu nombre"
+          required
+        />
+      </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formPhoto">
-          <Form.Label>Subir Foto de Perfil</Form.Label>
-          <Form.Control
-            type="file"
-            accept="image/*"
-            onChange={handlePhotoChange}
-          />
-        </Form.Group>
+      <Form.Group controlId="formEmail">
+        <Form.Label>Correo Electrónico</Form.Label>
+        <Form.Control
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Ingresa tu correo"
+          required
+        />
+      </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Guardar cambios
-        </Button>
-      </Form>
-      <ToastContainer />
-    </Container>
+      <Form.Group controlId="formPhoto">
+        <Form.Label>Foto de Perfil (opcional)</Form.Label>
+        <Form.Control
+          type="file"
+          onChange={(e) => setPhoto(e.target.files[0])}
+        />
+      </Form.Group>
+
+      <Button variant="primary" type="submit" className="mt-3">
+        Guardar cambios
+      </Button>
+    </Form>
   );
 };
 
