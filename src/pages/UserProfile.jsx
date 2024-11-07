@@ -11,6 +11,7 @@ const UserProfile = () => {
   const [email, setEmail] = useState(user?.email || "");
   const [photo, setPhoto] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [viewingOrders, setViewingOrders] = useState(false); // Nuevo estado para ver el historial de pedidos
   const navigate = useNavigate();
 
   // Datos simulados para el historial de compras
@@ -78,6 +79,12 @@ const UserProfile = () => {
                 <Button variant="danger" onClick={handleLogout}>
                   Cerrar sesión
                 </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => setViewingOrders(!viewingOrders)}
+                >
+                  {viewingOrders ? "Volver a Perfil" : "Mis pedidos"}
+                </Button>
               </div>
             </Card.Body>
           </Card>
@@ -114,8 +121,8 @@ const UserProfile = () => {
                 Guardar cambios
               </Button>
             </Form>
-          ) : (
-            <>
+          ) : viewingOrders ? (
+            <div>
               <h4 className="mt-4">Historial de Compras</h4>
               <Card>
                 <Card.Body>
@@ -128,7 +135,11 @@ const UserProfile = () => {
                   ))}
                 </Card.Body>
               </Card>
-            </>
+            </div>
+          ) : (
+            <div>
+              {/* Otros detalles de perfil que no están en modo edición ni en modo de visualización de pedidos */}
+            </div>
           )}
         </Col>
       </Row>

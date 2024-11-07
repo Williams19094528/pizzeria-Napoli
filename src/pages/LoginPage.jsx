@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,16 +11,14 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const { login, isAuthenticated, user } = useContext(AppContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (isAuthenticated) {
-      if (user?.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/profile");
-      }
+      const redirectTo = location.state?.from || "/menu"; // Redirigir al menú después de iniciar sesión
+      navigate(redirectTo);
     }
-  }, [isAuthenticated, user, navigate]);
+  }, [isAuthenticated, user, navigate, location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
