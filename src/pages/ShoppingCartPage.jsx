@@ -37,8 +37,8 @@ const ShoppingCartPage = () => {
     setShowConfirmationModal(true);
     setTimeout(() => {
       setShowConfirmationModal(false);
-      navigate("/"); // Redirige a la página principal después de 3 segundos
-    }, 3000);
+      navigate("/"); // Redirige a la página principal después de 5 segundos
+    }, 5000); // Espera 5 segundos antes de redirigir
   };
 
   return (

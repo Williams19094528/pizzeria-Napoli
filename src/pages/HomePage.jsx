@@ -1,14 +1,103 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import pizzaImage from "../assets/fotos/foto-de-fondo.jpg"; // Ruta de la imagen de fondo
-import Footer from "../components/Footer"; // Asegúrate de importar Footer
+import pizzaImage from "../assets/fotos/foto-de-fondo.jpg";
+import ProductModal from "../components/ProductModal"; // Importa el modal
+import { AppContext } from "../context/AppContext";
+import diavolaImage from "../assets/fotos/diavola.jpg";
+import capricciosaImage from "../assets/fotos/Capricciosa.jpg";
+import burrataImage from "../assets/fotos/pizzaburrata.jpg";
+import veganaImage from "../assets/fotos/pizzavegana.jpg";
+import criollaImage from "../assets/fotos/pizzacriolla.jpg";
+import jamonSerranoImage from "../assets/fotos/pizzajamonserrano.jpg";
+import peperoniImage from "../assets/fotos/pizzapeperoni.jpg";
+import quesoTomateImage from "../assets/fotos/pizzaquesotomate.jpg";
+import Footer from "../components/Footer";
+
+const pizzasClasicas = [
+  {
+    id: 1,
+    name: "Antica Diavola",
+    description:
+      "Pomodoro Ciao, Spianata romana, Mozzarella fior di latte, Provola Affumicata...",
+    price: 11990,
+    image: diavolaImage,
+  },
+  {
+    id: 2,
+    name: "Capricciosa",
+    description:
+      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
+    price: 13900,
+    image: capricciosaImage,
+  },
+  {
+    id: 3,
+    name: "Burrata",
+    description:
+      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
+    price: 13900,
+    image: burrataImage,
+  },
+  {
+    id: 4,
+    name: "Vegana",
+    description:
+      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
+    price: 13900,
+    image: veganaImage,
+  },
+  {
+    id: 5,
+    name: "Criolla",
+    description:
+      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
+    price: 13900,
+    image: criollaImage,
+  },
+  {
+    id: 6,
+    name: "Jamón Serrano",
+    description:
+      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
+    price: 13900,
+    image: jamonSerranoImage,
+  },
+  {
+    id: 7,
+    name: "Peperoni",
+    description:
+      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
+    price: 13900,
+    image: peperoniImage,
+  },
+  {
+    id: 8,
+    name: "Queso y Tomate",
+    description:
+      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
+    price: 13900,
+    image: quesoTomateImage,
+  },
+];
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { addToCart } = useContext(AppContext);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleOrderClick = () => {
     navigate("/menu");
+  };
+
+  // Función para abrir el modal
+  const openModal = (product) => {
+    setSelectedProduct(product);
+  };
+
+  // Función para cerrar el modal
+  const closeModal = () => {
+    setSelectedProduct(null);
   };
 
   return (
@@ -43,32 +132,46 @@ const HomePage = () => {
 
       {/* Galería de pizzas */}
       <Container className="mt-5">
-        <h3 className="text-center mb-4">Galería de Pizzas</h3>
+        <h3 className="text-center mb-4"> Pizzas Napolitanas </h3>
         <Row>
-          <Col md={4} className="mb-4">
-            <img
-              src="ruta-a-imagen-1.jpg"
-              alt="Pizza 1"
-              className="img-fluid rounded"
-            />
-          </Col>
-          <Col md={4} className="mb-4">
-            <img
-              src="ruta-a-imagen-2.jpg"
-              alt="Pizza 2"
-              className="img-fluid rounded"
-            />
-          </Col>
-          <Col md={4} className="mb-4">
-            <img
-              src="ruta-a-imagen-3.jpg"
-              alt="Pizza 3"
-              className="img-fluid rounded"
-            />
-          </Col>
-          {/* Agrega más columnas según sea necesario */}
+          {pizzasClasicas.map((pizza) => (
+            <Col md={3} sm={6} key={pizza.id} className="mb-4">
+              <div className="menu-item" onClick={() => openModal(pizza)}>
+                <img
+                  src={pizza.image}
+                  alt={pizza.name}
+                  className="menu-item-image img-fluid rounded"
+                />
+                <div className="menu-item-text mt-2">
+                  <h4>{pizza.name}</h4>
+                  <p>{pizza.description}</p>
+                  <div className="price-add">
+                    <span>${pizza.price.toLocaleString("es-CL")}</span>
+                    <button
+                      className="add-to-cart-button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Evita que se abra el modal al hacer clic en el botón
+                        addToCart({ ...pizza, quantity: 1 });
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          ))}
         </Row>
       </Container>
+
+      {/* Modal de Producto */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={closeModal} // Pasa la función closeModal aquí
+          addToCart={addToCart}
+        />
+      )}
 
       {/* Footer */}
       <Footer />

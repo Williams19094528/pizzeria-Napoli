@@ -5,7 +5,7 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [cartItems, setCartItems] = useState([]); // Estado del carrito
+  const [cartItems, setCartItems] = useState([]);
 
   const login = (email, password) => {
     return new Promise((resolve) => {
@@ -32,13 +32,11 @@ export const AppProvider = ({ children }) => {
     setCartItems([]); // Limpia el carrito al cerrar sesión
   };
 
-  // Nueva función para actualizar el usuario
   const updateUser = (updatedUser) => {
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
   };
 
-  // Función para agregar un artículo al carrito
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
@@ -53,6 +51,24 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  const removeFromCart = (productId) => {
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== productId)
+    );
+  };
+
+  const decreaseQuantity = (productId) => {
+    setCartItems((prevItems) =>
+      prevItems
+        .map((item) =>
+          item.id === productId && item.quantity > 1
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
     if (savedUser) {
@@ -65,13 +81,14 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         user,
-        setUser,
         isAuthenticated,
         login,
         logout,
         updateUser,
         cartItems,
-        addToCart, // Asegúrate de incluir addToCart aquí
+        addToCart,
+        removeFromCart,
+        decreaseQuantity,
       }}
     >
       {children}

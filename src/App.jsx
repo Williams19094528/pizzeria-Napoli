@@ -1,3 +1,4 @@
+// App.jsx
 import {
   BrowserRouter as Router,
   Route,
@@ -18,7 +19,6 @@ import UserProfile from "./pages/UserProfile";
 import EditProfile from "./pages/EditProfile";
 import AdminPage from "./pages/AdminPage";
 import ShoppingCartPage from "./pages/ShoppingCartPage";
-import CheckoutPage from "./pages/CheckoutPage";
 
 // Ruta protegida para verificar autenticación y rol de administrador
 const PrivateRoute = ({ children }) => {
@@ -50,9 +50,9 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
 
-          {/* Carro de compra y checkout */}
+          {/* Carro de compra (actúa también como checkout) */}
           <Route path="/cart" element={<ShoppingCartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<Navigate to="/cart" />} />
 
           {/* Redirigir /orders al perfil */}
           <Route path="/orders" element={<Navigate to="/profile" />} />

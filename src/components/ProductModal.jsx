@@ -13,8 +13,14 @@ const ProductModal = ({ product, onClose, addToCart }) => {
     onClose(); // Cierra el modal después de agregar al carrito
   };
 
+  const handleOverlayClick = (e) => {
+    if (e.target.className === "modal-overlay") {
+      onClose();
+    }
+  };
+
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal-content">
         <button className="modal-close" onClick={onClose}>
           &times;
@@ -25,7 +31,10 @@ const ProductModal = ({ product, onClose, addToCart }) => {
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <label>Instrucciones especiales</label>
-            <textarea placeholder="Incluye una nota" />
+            <textarea
+              placeholder="Incluye una nota"
+              className="special-instructions"
+            />
 
             <div className="modal-actions">
               <div className="quantity">

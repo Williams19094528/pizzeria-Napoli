@@ -2,15 +2,20 @@ import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
-const Cart = ({ cartItems, setCartItems }) => {
-  const { isAuthenticated } = useContext(AppContext);
+const Cart = () => {
+  const {
+    cartItems,
+    addToCart,
+    removeFromCart,
+    decreaseQuantity,
+    isAuthenticated,
+  } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleContinue = () => {
     if (isAuthenticated) {
       navigate("/checkout");
     } else {
-      // Redirige a la página de inicio de sesión con la ruta de origen '/cart'
       navigate("/login", { state: { from: "/cart" } });
     }
   };
@@ -20,17 +25,30 @@ const Cart = ({ cartItems, setCartItems }) => {
     .toLocaleString("es-CL");
 
   return (
-    <div className="cart">
+    <div className="cart-section">
       <h3>Tu Carrito ({cartItems.length} productos)</h3>
-      <ul>
+      <ul className="cart-items">
         {cartItems.map((item) => (
           <li key={item.id} className="cart-item">
             <img src={item.image} alt={item.name} className="cart-item-image" />
             <div className="cart-item-details">
               <h4>{item.name}</h4>
               <p>${item.price.toLocaleString("es-CL")}</p>
-              <div className="quantity">{/* Ajuste de cantidad */}</div>
+              <div className="cart-item-quantity">
+                <button
+                  className="remove-button"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  🗑️
+                </button>
+                <button onClick={() => decreaseQuantity(item.id)}>-</button>
+                <span>{item.quantity}</span>
+                <button onClick={() => addToCart(item)}>+</button>
+              </div>
             </div>
+            <span className="cart-item-price">
+              ${(item.price * item.quantity).toLocaleString("es-CL")}
+            </span>
           </li>
         ))}
       </ul>
