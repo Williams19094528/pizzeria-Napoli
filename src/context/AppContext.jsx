@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import api from "../api"; // Importa la configuración de Axios
 
 export const AppContext = createContext();
 
@@ -7,36 +8,44 @@ export const AppProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
-  const login = (email, password) => {
-    return new Promise((resolve) => {
-      if (email === "camacarow7@gmail.com" && password === "1234") {
-        const adminUser = { email, role: "admin" };
-        setUser(adminUser);
-        setIsAuthenticated(true);
-        localStorage.setItem("user", JSON.stringify(adminUser));
-        resolve(true);
-      } else {
-        const regularUser = { email, role: "user" };
-        setUser(regularUser);
-        setIsAuthenticated(true);
-        localStorage.setItem("user", JSON.stringify(regularUser));
-        resolve(true);
-      }
-    });
+  // Función para iniciar sesión
+  const login = async (email, password) => {
+    try {
+      // Realiza la solicitud al backend
+      const response = await api.post("/login", { email, password }); // Ajusta "/login" según la ruta del backend
+      const { user, token } = response.data; // Ajusta según la estructura de tu backend
+
+      // Guarda el usuario y el token en localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+
+      // Actualiza el estado global
+      setUser(user);
+      setIsAuthenticated(true);
+
+      return true; // Inicio de sesión exitoso
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      return false; // Credenciales incorrectas
+    }
   };
 
+  // Función para cerrar sesión
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem("user");
-    setCartItems([]); // Limpia el carrito al cerrar sesión
+    localStorage.removeItem("token"); // Limpia el token
+    setCartItems([]); // Limpia el carrito
   };
 
+  // Función para actualizar los datos del usuario
   const updateUser = (updatedUser) => {
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
   };
 
+  // Función para agregar productos al carrito
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
@@ -51,12 +60,14 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  // Función para eliminar un producto del carrito
   const removeFromCart = (productId) => {
     setCartItems((prevItems) =>
       prevItems.filter((item) => item.id !== productId)
     );
   };
 
+  // Función para disminuir la cantidad de un producto en el carrito
   const decreaseQuantity = (productId) => {
     setCartItems((prevItems) =>
       prevItems
@@ -69,9 +80,12 @@ export const AppProvider = ({ children }) => {
     );
   };
 
+  // Cargar el estado inicial desde localStorage
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
-    if (savedUser) {
+    const token = localStorage.getItem("token");
+
+    if (savedUser && token) {
       setUser(savedUser);
       setIsAuthenticated(true);
     }
