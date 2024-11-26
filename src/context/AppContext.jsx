@@ -8,6 +8,7 @@ export const AppProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
+
   // Función para iniciar sesión
   const login = async (email, password) => {
     try {
@@ -30,6 +31,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+
   // Función para cerrar sesión
   const logout = () => {
     setUser(null);
@@ -44,6 +46,8 @@ export const AppProvider = ({ children }) => {
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
   };
+
+ 
 
   // Función para agregar productos al carrito
   const addToCart = (product) => {
