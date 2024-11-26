@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // Lee la URL del backend desde las variables de entorno
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000", // https://hito-3-desafio-final-g65.onrender.com
   headers: {
     "Content-Type": "application/json",
   },
