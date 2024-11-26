@@ -11,7 +11,7 @@ const RegistrarUsuario = async (usuario) => {
 
   try {
     const response = await api.post("/api/crearUsuario", usuario);
-    return response.data;
+    return response;
   } catch (error) {
     return error.response.data;  
   }
@@ -61,6 +61,7 @@ const RegisterPage = () => {
     const NuevoUsuario = Newuser;
     
     await RegistrarUsuario(NuevoUsuario).then((success) => {
+      console.log(success);
       if (success.status === 201) {
         toast.success("Registro exitoso", {
           position: "top-center",
