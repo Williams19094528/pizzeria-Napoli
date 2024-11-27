@@ -1,5 +1,7 @@
 # Proyecto Final Desarrollo Full stack
 
+Integrantes ( Carlos Diaz y Williams Camacaro )
+
 Hito 4 : Integracion con el Frontend y Backend 
 
 Requerimientos:
