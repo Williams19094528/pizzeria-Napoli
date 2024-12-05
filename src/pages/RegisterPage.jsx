@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
-import { Form, Button, Col, Row, Card, CardBody, Container } from "react-bootstrap";
+import { Form, Button, Col, Row, Card, CardBody, Container, Spinner, Modal} from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
@@ -11,7 +11,7 @@ const RegistrarUsuario = async (usuario) => {
 
   try {
     const response = await api.post("/api/crearUsuario", usuario);
-    return response.data;
+    return response;
   } catch (error) {
     return error.response.data;  
   }
@@ -27,6 +27,7 @@ const RegisterPage = () => {
     avatar: "",
     confirmPassword: ""
   });
+  const [showModal, setShowModal] = useState(false);
   const inputRef = useRef();
 
   const navigate = useNavigate();
@@ -59,13 +60,17 @@ const RegisterPage = () => {
       return;
     }
     const NuevoUsuario = Newuser;
-    
+    setShowModal(true);
     await RegistrarUsuario(NuevoUsuario).then((success) => {
+      console.log(success);
       if (success.status === 201) {
-        toast.success("Registro exitoso", {
+        toast.success("Registro exitoso, serás redirigido al Home", {
           position: "top-center",
           autoClose: 3000,
-          hideProgressBar: true,
+          hideProgressBar: false,
+          pauseOnHover: false,
+          draggable:true,
+          progress:undefined,
           onClose: () => navigate("/"),
         });
       }
@@ -93,12 +98,21 @@ const RegisterPage = () => {
         progress: undefined,
       });
   });
+    setShowModal(false);
 };
 
 
   return (
     <div className="mb-5">
       <Container className="mt-5 mb-5">
+        <Modal show={showModal} keyboard={false}>
+        <Modal.Header>
+          <Modal.Title>Registrando Usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Spinner animation="border" variant="success" />
+        </Modal.Body>
+        </Modal>
         <Row className="justify-content-center">
           <Col>
           </Col>
@@ -163,7 +177,6 @@ const RegisterPage = () => {
       </Container>
       <hr />
     </div>
-    
   );
 };
 

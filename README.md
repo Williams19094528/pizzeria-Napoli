@@ -1,26 +1,36 @@
 # Proyecto Final Desarrollo Full stack
 
-Hito 2 : Desarrollo fronted :
+Integrantes ( Carlos Diaz y Williams Camacaro )
+
+Hito 4 : Integracion con el Frontend y Backend 
 
 Requerimientos:
 
-1. Crear un nuevo proyecto usando npx e instalar las dependencias.
+Requerimientos
+1. Realizar el deploy de la aplicación cliente (vercel)
+   https://pizzeria-napoli.vercel.app/?vercelToolbarCode=rRBuvCrQZpOMaa1
 
-2. Utilizar React Router para la navegación entre rutas.
+3. Realizar el deploy de la aplicación backend.
+4. https://hito-3-desafio-final-g65.onrender.com
+   se realizo en render 
 
-3. Reutilizar componentes haciendo uso del paso de props y renderización dinámica.
+5. Realizar el deploy de la base de datos.
+  se realizo en render 
 
-4. Hacer uso de los hooks para un desarrollo ágil y reactivo.
+7. Integrar la aplicación cliente con la aplicación backend en producción.
 
-5. Utilizar Context para el manejo del estado global.
+En relacion a este punto todavia existen inconvenientes pero es al momento de ingresar con el roll de admin no ingresa a la ruta privada , toma el correo y contraseña como si fuera un usuario normal .
 
+La pagina la veo un poco lenta tambien , nos podras ayudar diego dando sugerencias ? 
+
+Mucuchas Gracias 
    
 
 
 https://pizzeria-napoli.vercel.app/?vercelToolbarCode=rRBuvCrQZpOMaa1
 
 El usuario admin para ver el perfil privado del local y poder generar publicaciones  es 
-usuario: camacarow7@gmail.com
+usuario: admin@gmail.com
 clave : 1234
 
-Todavia falta meterle un poco mas al diseño pero los requerimientos estan cubiertos 
+
