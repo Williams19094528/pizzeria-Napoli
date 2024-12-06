@@ -2,16 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import Cart from "../components/Cart";
 import ProductModal from "../components/ProductModal";
-import anticaDiavolaImage from "../assets/fotos/diavola.jpg";
-import capricciosaImage from "../assets/fotos/Capricciosa.jpg";
-import pizzaveganaImage from "../assets/fotos/pizzavegana.jpg";
-import pizzaburrataImage from "../assets/fotos/pizzaburrata.jpg";
-import pizzaCriollaImage from "../assets/fotos/pizzacriolla.jpg";
-import pizzaJamonSerranoImage from "../assets/fotos/pizzajamonserrano.jpg";
-import pizzaPeperoniImage from "../assets/fotos/pizzapeperoni.jpg";
-import pizzaQuesoTomateImage from "../assets/fotos/pizzaquesotomate.jpg";
-import bebidaImage from "../assets/fotos/pepsi.jpg";
-import { use } from "react";
+
 
 
 
