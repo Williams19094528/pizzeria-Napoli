@@ -3,7 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 const crearOrden = async (cartItems) => {
-  console.log(cartItems);
+  console.log(`carItems: ${cartItems}`);
   const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedido",{
     method: "POST",
     headers: {
