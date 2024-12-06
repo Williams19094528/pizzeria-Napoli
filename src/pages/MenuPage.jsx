@@ -146,40 +146,7 @@ const MenuPage = () => {
         </div>
 
         {/* Bebidas */}
-        <div className="menu-section">
-          <h2>Bebidas</h2>
-          <div className="menu-items">
-            {bebidas.map((bebida) => (
-              <div
-                key={bebida.id}
-                className="menu-item"
-                onClick={() => openModal(bebida)}
-              >
-                <img
-                  src={bebida.image}
-                  alt={bebida.name}
-                  className="menu-item-image"
-                />
-                <div className="menu-item-text">
-                  <h3>{bebida.name}</h3>
-                  <p>{bebida.description}</p>
-                  <div className="price-add">
-                    <span>${bebida.price.toLocaleString("es-CL")}</span>
-                    <button
-                      className="add-to-cart-button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart({ ...bebida, quantity: 1 });
-                      }}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        
       </div>
 
       {/* Carrito */}
