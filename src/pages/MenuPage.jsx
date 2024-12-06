@@ -71,15 +71,7 @@ const pizzasNapolitanas = [
   },
 ];
 */
-const bebidas = [
-  {
-    id: 9,
-    name: "Pepsi",
-    description: "Bebida refrescante.",
-    price: 2000,
-    image: bebidaImage,
-  },
-];
+
 
 
 
