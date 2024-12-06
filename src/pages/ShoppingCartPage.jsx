@@ -16,8 +16,27 @@ import { MdAccountBalance } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 import checkoutImage from "../assets/fotos/foto-checkout.jpg";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+
+
 
 const ShoppingCartPage = () => {
+
+  const crearOrden = async (cartItems) => {
+    console.log(`carItems: ${cartItems}`);
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedido",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Autorizacion": localStorage.getItem("token")
+        },
+        body: JSON.stringify({total: totalAmount, tipo_de_pago: selectedPaymentMethod, delivery: false, productos: cartItems})
+        });
+      const data = await response.json();
+      return data;
+      };
   const { cartItems, setCartItems } = useContext(AppContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Tarjeta de Crédito o Débito");
@@ -33,13 +52,30 @@ const ShoppingCartPage = () => {
     setSelectedPaymentMethod(method);
   };
 
-  const handlePaymentConfirmation = () => {
+  const handlePaymentConfirmation = async() => {
     setShowConfirmationModal(true);
+    try{
+      const respuesta = await crearOrden();
+      const data = await respuesta.json();
+      setShowConfirmationModal(false);
+      setCartItems([]);
+      navigate("/"); 
+    }
+    catch(err){
+      console.log(err);
+      toast.error("Error al generar el pedido, por favor intente nuevamente", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+      });
+    }
+    /*
     setTimeout(() => {
       setShowConfirmationModal(false);
       setCartItems([]);
       navigate("/"); // Redirige a la página principal después de 5 segundos
     }, 5000); // Espera 5 segundos antes de redirigir
+    */
   };
 
   return (
