@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import checkoutImage from "../assets/fotos/foto-checkout.jpg";
 
 const ShoppingCartPage = () => {
-  const { cartItems } = useContext(AppContext);
+  const { cartItems, setCartItems } = useContext(AppContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -37,6 +37,7 @@ const ShoppingCartPage = () => {
     setShowConfirmationModal(true);
     setTimeout(() => {
       setShowConfirmationModal(false);
+      setCartItems([]);
       navigate("/"); // Redirige a la página principal después de 5 segundos
     }, 5000); // Espera 5 segundos antes de redirigir
   };
