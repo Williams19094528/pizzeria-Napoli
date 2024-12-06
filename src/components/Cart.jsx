@@ -21,7 +21,7 @@ const Cart = () => {
   };
 
   const total = cartItems
-    .reduce((sum, item) => sum + item.price * item.quantity, 0)
+    .reduce((sum, item) => sum + item.precio * item.quantity, 0)
     .toLocaleString("es-CL");
 
   return (
@@ -30,10 +30,10 @@ const Cart = () => {
       <ul className="cart-items">
         {cartItems.map((item) => (
           <li key={item.id} className="cart-item">
-            <img src={item.image} alt={item.name} className="cart-item-image" />
+            <img src={item.picture_url} alt={item.nombre} className="cart-item-image" />
             <div className="cart-item-details">
-              <h4>{item.name}</h4>
-              <p>${item.price.toLocaleString("es-CL")}</p>
+              <h4>{item.nombre}</h4>
+              <p>${item.precio.toLocaleString("es-CL")}</p>
               <div className="cart-item-quantity">
                 <button
                   className="remove-button"
@@ -47,7 +47,7 @@ const Cart = () => {
               </div>
             </div>
             <span className="cart-item-price">
-              ${(item.price * item.quantity).toLocaleString("es-CL")}
+              ${(item.precio * item.quantity).toLocaleString("es-CL")}
             </span>
           </li>
         ))}
