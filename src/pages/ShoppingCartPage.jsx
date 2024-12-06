@@ -25,7 +25,7 @@ const ShoppingCartPage = () => {
   const navigate = useNavigate();
 
   const totalAmount = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + item.precio * item.quantity,
     0
   );
 
@@ -57,17 +57,17 @@ const ShoppingCartPage = () => {
                     <ListGroup.Item key={index}>
                       <Row className="align-items-center">
                         <Col md={8}>
-                          <strong>{item.name}</strong>
+                          <strong>{item.nombre}</strong>
                           <p>
                             Precio unitario: $
-                            {item.price.toLocaleString("es-CL")}
+                            {item.precio.toLocaleString("es-CL")}
                           </p>
                           <p>Cantidad: {item.quantity}</p>
                         </Col>
                         <Col md={4} className="text-end">
                           <p>
                             Total: $
-                            {(item.price * item.quantity).toLocaleString(
+                            {(item.precio * item.quantity).toLocaleString(
                               "es-CL"
                             )}
                           </p>
