@@ -54,14 +54,23 @@ const ShoppingCartPage = () => {
   };
 
   const handlePaymentConfirmation = async() => {
-    console.log(`carItems: ${cartItems}`);
+    console.log(`carItems_cdiaz: ${cartItems}`);
     setShowConfirmationModal(true);
     try{
       const respuesta = await crearOrden();
+      if(respuesta.status !== 201){
+        toast.error("Error al generar el pedido, por favor intente nuevamente", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+        });
+      }
+      else{
       const data = await respuesta.json();
       setShowConfirmationModal(false);
       setCartItems([]);
       navigate("/"); 
+      }
     }
     catch(err){
       console.log(err);
