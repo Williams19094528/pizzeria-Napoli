@@ -150,8 +150,8 @@ const UserProfile = () => {
                 <Card.Body>
                   {orders.map((purchase, index) => (
                     <div key={index} className="mb-2 p-2 border-bottom">
-                      <strong>{purchase.id}</strong>
-                      <p>Fecha: {(purchase.fecha_hora).toLocaleDateString("es-CL")}</p>
+                      <strong>Pedido #{purchase.id}</strong>
+                      <p>Fecha: {(purchase.fecha_hora).toLocaleString("es-CL")}</p>
                       <p>Total: ${(purchase.total).toLocaleString("es-CL")}</p>
                       <p>Delivery: {purchase.delivery? "Si" : "No"}</p>
                       <p>Tipo de pago: {purchase.tipo_pago}</p>
