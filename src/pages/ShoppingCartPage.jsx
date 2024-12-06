@@ -44,8 +44,7 @@ const ShoppingCartPage = () => {
         },
         body: JSON.stringify(body_data)
         });
-      const data = await response.json();
-      return data;
+      return response;
       };
   const { cartItems, setCartItems } = useContext(AppContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -64,7 +63,7 @@ const ShoppingCartPage = () => {
 
   const handlePaymentConfirmation = async() => {
 
-    const data = crearOrden().then((success) => {
+    await crearOrden().then((success) => {
       console.log(success);
       if (success.status === 201) {
         toast.success("Orden creada exitosamente", {
@@ -78,6 +77,7 @@ const ShoppingCartPage = () => {
         });
       }
       else {
+
         toast.error(`Error: ${success}`, {
           position: "top-center",
           autoClose: 10000,
