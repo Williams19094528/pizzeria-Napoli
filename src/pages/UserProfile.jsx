@@ -151,8 +151,8 @@ const UserProfile = () => {
                   {orders.map((purchase, index) => (
                     <div key={index} className="mb-2 p-2 border-bottom">
                       <strong>{purchase.id}</strong>
-                      <p>Fecha: {purchase.fecha_hora}.toLocaleString("es-CL")</p>
-                      <p>Precio: {purchase.total}.toLocaleString("es-CL")</p>
+                      <p>Fecha: {(purchase.fecha_hora).toLocaleString("es-CL")}</p>
+                      <p>Precio: {(purchase.total).toLocaleString("es-CL")}</p>
                       <p>Delivery: {purchase.delivery? "Si" : "No"}</p>
                       <p>Tipo de pago: {purchase.tipo_pago}</p>
                     </div>
