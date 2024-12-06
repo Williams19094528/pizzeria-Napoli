@@ -105,10 +105,10 @@ const MenuPage = () => {
       setProducts(data);
     });
   }, []);
-  
+  const [products, setProducts] = useState([]);
   const { cartItems, addToCart } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState([]);
+ 
   const openModal = (product) => setSelectedProduct(product);
   const closeModal = () => setSelectedProduct(null);
 

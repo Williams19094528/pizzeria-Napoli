@@ -82,6 +82,18 @@ const pizzasClasicas = [
 ];
 
 const HomePage = () => {
+  const fetchProducts = async () => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos");
+    const data = await response.json();
+    return data;
+  };
+  useEffect(() => {
+    fetchProducts().then((data) => {
+      console.log(data);
+      setProducts(data);
+    });
+  }, []);
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const { addToCart } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -134,19 +146,19 @@ const HomePage = () => {
       <Container className="mt-5">
         <h3 className="text-center mb-4"> Pizzas Napolitanas </h3>
         <Row>
-          {pizzasClasicas.map((pizza) => (
+          {products.map((pizza) => (
             <Col md={3} sm={6} key={pizza.id} className="mb-4">
               <div className="menu-item" onClick={() => openModal(pizza)}>
                 <img
-                  src={pizza.image}
-                  alt={pizza.name}
+                  src={pizza.picture_url}
+                  alt={pizza.nombre}
                   className="menu-item-image img-fluid rounded"
                 />
                 <div className="menu-item-text mt-2">
-                  <h4>{pizza.name}</h4>
-                  <p>{pizza.description}</p>
+                  <h4>{pizza.nombre}</h4>
+                  <p>{pizza.detalle}</p>
                   <div className="price-add">
-                    <span>${pizza.price.toLocaleString("es-CL")}</span>
+                    <span>${pizza.precio.toLocaleString("es-CL")}</span>
                     <button
                       className="add-to-cart-button"
                       onClick={(e) => {
