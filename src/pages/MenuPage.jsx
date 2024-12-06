@@ -20,6 +20,7 @@ import { use } from "react";
 
 
 // Definición de productos
+/*
 const pizzasNapolitanas = [
   {
     id: 1,
@@ -78,7 +79,7 @@ const pizzasNapolitanas = [
     image: pizzaQuesoTomateImage,
   },
 ];
-
+*/
 const bebidas = [
   {
     id: 9,
@@ -89,19 +90,22 @@ const bebidas = [
   },
 ];
 
-const fetchProducts = async () => {
-  const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos");
-  const data = await response.json();
-  return data;
-};
+
 
 const MenuPage = () => {
+
+  const fetchProducts = async () => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos");
+    const data = await response.json();
+    return data;
+  };
   useEffect(() => {
     fetchProducts().then((data) => {
       console.log(data);
       setProducts(data);
     });
   }, []);
+  
   const { cartItems, addToCart } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
