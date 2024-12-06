@@ -64,7 +64,6 @@ const ShoppingCartPage = () => {
 
   const handlePaymentConfirmation = async() => {
     console.log(`carItems_cdiaz: ${cartItems}`);
-    setShowConfirmationModal(true);
     try{
       const respuesta = await crearOrden();
       if(respuesta.status !== 201){
@@ -75,8 +74,11 @@ const ShoppingCartPage = () => {
         });
       }
       else{
-      const data = await respuesta.json();
-      setShowConfirmationModal(false);
+        toast.success("Pedido generado exitosamente", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+        });
       setCartItems([]);
       navigate("/"); 
       }
