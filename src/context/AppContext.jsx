@@ -104,6 +104,7 @@ export const AppProvider = ({ children }) => {
         logout,
         updateUser,
         cartItems,
+        setCartItems,
         addToCart,
         removeFromCart,
         decreaseQuantity,
