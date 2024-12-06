@@ -23,8 +23,14 @@ import { toast, ToastContainer } from "react-toastify";
 
 const ShoppingCartPage = () => {
 
-  const crearOrden = async (cartItems) => {
-    console.log(`carItems: ${cartItems}`);
+  const crearOrden = async () => {
+    const body_data = {
+      total: totalAmount,
+      tipo_de_pago: selectedPaymentMethod,
+      delivery: false,
+      productos: cartItems
+    };
+    console.log(body_data);
     const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedidos",{
       method: "POST",
       headers: {
@@ -33,7 +39,7 @@ const ShoppingCartPage = () => {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
         
         },
-        body: JSON.stringify({total: totalAmount, tipo_de_pago: selectedPaymentMethod, delivery: false, productos: cartItems})
+        body: JSON.stringify(body_data)
         });
       const data = await response.json();
       return data;
