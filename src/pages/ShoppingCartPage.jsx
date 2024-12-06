@@ -28,7 +28,10 @@ const ShoppingCartPage = () => {
       total: totalAmount,
       tipo_de_pago: selectedPaymentMethod,
       delivery: false,
-      productos: cartItems
+      productos: cartItems.map(item => ({
+        producto_id: item.id,
+        cantidad: item.quantity
+      }))
     };
     console.log(body_data);
     const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedidos",{
