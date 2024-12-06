@@ -26,10 +26,10 @@ const ProductModal = ({ product, onClose, addToCart }) => {
           &times;
         </button>
         <div className="modal-body">
-          <img src={product.image} alt={product.name} className="modal-image" />
+          <img src={product.picture_url} alt={product.nombre} className="modal-image" />
           <div className="modal-details">
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
+            <h2>{product.nombre}</h2>
+            <p>{product.detalle}</p>
             <label>Instrucciones especiales</label>
             <textarea
               placeholder="Incluye una nota"
@@ -43,7 +43,7 @@ const ProductModal = ({ product, onClose, addToCart }) => {
                 <button onClick={handleIncrease}>+</button>
               </div>
               <button className="add-to-cart-button" onClick={handleAddToCart}>
-                🛒 Agregar ${(product.price * quantity).toLocaleString("es-CL")}
+                🛒 Agregar ${(product.precio * quantity).toLocaleString("es-CL")}
               </button>
             </div>
           </div>
