@@ -54,6 +54,7 @@ const ShoppingCartPage = () => {
   };
 
   const handlePaymentConfirmation = async() => {
+    console.log(`carItems: ${cartItems}`);
     setShowConfirmationModal(true);
     try{
       const respuesta = await crearOrden();
