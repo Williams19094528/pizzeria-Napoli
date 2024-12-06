@@ -161,7 +161,7 @@ const MenuPage = () => {
       {/* Modal de Producto */}
       {selectedProduct && (
         <ProductModal
-          product={products}
+          product={selectedProduct}
           onClose={closeModal}
           addToCart={addToCart}
         />
