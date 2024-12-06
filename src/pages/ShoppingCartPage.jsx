@@ -30,7 +30,7 @@ const ShoppingCartPage = () => {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Autorizacion": "Bearer " + localStorage.getItem("token")
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
         
         },
         body: JSON.stringify({total: totalAmount, tipo_de_pago: selectedPaymentMethod, delivery: false, productos: cartItems})
