@@ -21,7 +21,6 @@ const crearOrden = async (cartItems) => {
 const Cart = () => {
   const {
     cartItems,
-    setcartItems,
     addToCart,
     removeFromCart,
     decreaseQuantity,
@@ -31,7 +30,6 @@ const Cart = () => {
 
   const handleContinue = () => {
     if (isAuthenticated) {
-      setcartItems([]);
       navigate("/checkout");
     } else {
       navigate("/login", { state: { from: "/cart" } });
