@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ProductModal from "../components/ProductModal"; // Importa el modal
 import { AppContext } from "../context/AppContext";
-
+import pizzaImage from "../assets/fotos/foto-de-fondo.jpg";
 import Footer from "../components/Footer";
 
 
