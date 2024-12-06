@@ -2,9 +2,26 @@ import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
+const crearOrden = async (cartItems) => {
+  console.log(cartItems);
+  const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedido",{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Autorizacion": localStorage.getItem("token")
+      },
+      body: JSON.stringify(cartItems)
+      });
+    const data = await response.json();
+    return data;
+    };
+
+
 const Cart = () => {
   const {
     cartItems,
+    setcartItems,
     addToCart,
     removeFromCart,
     decreaseQuantity,
@@ -14,6 +31,7 @@ const Cart = () => {
 
   const handleContinue = () => {
     if (isAuthenticated) {
+      setcartItems([]);
       navigate("/checkout");
     } else {
       navigate("/login", { state: { from: "/cart" } });
