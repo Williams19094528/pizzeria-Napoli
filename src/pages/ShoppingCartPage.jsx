@@ -112,14 +112,20 @@ const ShoppingCartPage = () => {
                 <strong>Total a Pagar:</strong>
                 <span>${totalAmount.toLocaleString("es-CL")}</span>
               </div>
-
-              <Button
+              {cartItems.length > 0 ? <Button
                 className="w-100 mt-3"
                 variant="danger"
                 onClick={handlePaymentConfirmation}
               >
                 Pagar
-              </Button>
+              </Button> : <Button
+                className="w-100 mt-3 disabled"
+                variant="danger"
+                onClick={handlePaymentConfirmation}
+              >
+                Carrito Vacío
+              </Button>}
+              
             </Card.Body>
           </Card>
         </Col>
