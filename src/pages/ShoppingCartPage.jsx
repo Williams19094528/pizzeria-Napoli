@@ -62,10 +62,12 @@ const ShoppingCartPage = () => {
   };
 
   const handlePaymentConfirmation = async() => {
-
+    setShowConfirmationModal(true);
     await crearOrden().then((success) => {
       console.log(success);
       if (success.status === 201) {
+        setCartItems([]);
+        setShowConfirmationModal(false);
         toast.success("Orden creada exitosamente", {
           position: "top-center",
           autoClose: 3000,
@@ -77,7 +79,7 @@ const ShoppingCartPage = () => {
         });
       }
       else {
-
+        showConfirmationModal(false);
         toast.error(`Error: ${success}`, {
           position: "top-center",
           autoClose: 10000,
@@ -90,6 +92,7 @@ const ShoppingCartPage = () => {
         });
       }
     }).catch((error) => {
+      showConfirmationModal(false);
       toast.error(`Error: ${error}`, {
         position: "top-center",
         autoClose: 5000,
