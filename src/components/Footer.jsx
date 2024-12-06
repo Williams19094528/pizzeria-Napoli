@@ -35,7 +35,7 @@ const Footer = () => {
         </Row>
         <div className="text-center mt-4 footer-powered">
           <p>
-            Powered by <span className="footer-branding">JUSTE</span>
+            Powered by <span className="footer-branding">Carlos Diaz -- William Camacaro</span>
           </p>
         </div>
       </Container>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ const UserProfile = () => {
   const [editing, setEditing] = useState(false);
   const [viewingOrders, setViewingOrders] = useState(false); // Nuevo estado para ver el historial de pedidos
   const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
 
   // Datos simulados para el historial de compras
   const purchases = [
@@ -20,6 +21,27 @@ const UserProfile = () => {
     { productName: "Pizza Pepperoni", date: "10/10/2024", price: "$13.990" },
     { productName: "Pizza Hawaiana", date: "05/10/2024", price: "$12.990" },
   ];
+
+  const verMisPedidos = async () => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedidos",{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        
+        },
+    });
+    const data = await response.json();
+    return data;
+  };
+
+  useEffect(() => {
+    verMisPedidos().then((data) => {
+      console.log(data);
+      setOrders(data);
+    });
+  }, []);
 
   const handleSaveChanges = (e) => {
     e.preventDefault();
@@ -126,11 +148,13 @@ const UserProfile = () => {
               <h4 className="mt-4">Historial de Compras</h4>
               <Card>
                 <Card.Body>
-                  {purchases.map((purchase, index) => (
+                  {orders.map((purchase, index) => (
                     <div key={index} className="mb-2 p-2 border-bottom">
-                      <strong>{purchase.productName}</strong>
-                      <p>Fecha: {purchase.date}</p>
-                      <p>Precio: {purchase.price}</p>
+                      <strong>{purchase.id}</strong>
+                      <p>Fecha: {purchase.fecha_hora}</p>
+                      <p>Precio: {purchase.total}</p>
+                      <p>Delivery: {purchase.delivery}</p>
+                      <p>Tipo de pago: {purchase.tipo_pago}</p>
                     </div>
                   ))}
                 </Card.Body>
