@@ -107,6 +107,7 @@ const ShoppingCartPage = () => {
   return (
     <div className="container mt-5">
       <h2>Carro de Compras</h2>
+      <ToastContainer />
       <Row>
         <Col md={8}>
           <Card className="mb-4">
