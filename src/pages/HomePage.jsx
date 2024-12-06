@@ -1,85 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import pizzaImage from "../assets/fotos/foto-de-fondo.jpg";
 import ProductModal from "../components/ProductModal"; // Importa el modal
 import { AppContext } from "../context/AppContext";
-import diavolaImage from "../assets/fotos/diavola.jpg";
-import capricciosaImage from "../assets/fotos/Capricciosa.jpg";
-import burrataImage from "../assets/fotos/pizzaburrata.jpg";
-import veganaImage from "../assets/fotos/pizzavegana.jpg";
-import criollaImage from "../assets/fotos/pizzacriolla.jpg";
-import jamonSerranoImage from "../assets/fotos/pizzajamonserrano.jpg";
-import peperoniImage from "../assets/fotos/pizzapeperoni.jpg";
-import quesoTomateImage from "../assets/fotos/pizzaquesotomate.jpg";
+
 import Footer from "../components/Footer";
 
-const pizzasClasicas = [
-  {
-    id: 1,
-    name: "Antica Diavola",
-    description:
-      "Pomodoro Ciao, Spianata romana, Mozzarella fior di latte, Provola Affumicata...",
-    price: 11990,
-    image: diavolaImage,
-  },
-  {
-    id: 2,
-    name: "Capricciosa",
-    description:
-      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
-    price: 13900,
-    image: capricciosaImage,
-  },
-  {
-    id: 3,
-    name: "Burrata",
-    description:
-      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
-    price: 13900,
-    image: burrataImage,
-  },
-  {
-    id: 4,
-    name: "Vegana",
-    description:
-      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
-    price: 13900,
-    image: veganaImage,
-  },
-  {
-    id: 5,
-    name: "Criolla",
-    description:
-      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
-    price: 13900,
-    image: criollaImage,
-  },
-  {
-    id: 6,
-    name: "Jamón Serrano",
-    description:
-      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
-    price: 13900,
-    image: jamonSerranoImage,
-  },
-  {
-    id: 7,
-    name: "Peperoni",
-    description:
-      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
-    price: 13900,
-    image: peperoniImage,
-  },
-  {
-    id: 8,
-    name: "Queso y Tomate",
-    description:
-      "Pomodoro Ciao, mozzarella fior di latte, aceitunas, jamón cocido, setas...",
-    price: 13900,
-    image: quesoTomateImage,
-  },
-];
+
 
 const HomePage = () => {
   const fetchProducts = async () => {
