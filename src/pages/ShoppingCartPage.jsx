@@ -20,7 +20,7 @@ import checkoutImage from "../assets/fotos/foto-checkout.jpg";
 const ShoppingCartPage = () => {
   const { cartItems, setCartItems } = useContext(AppContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Tarjeta de Crédito o Débito");
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const navigate = useNavigate();
 
@@ -112,19 +112,19 @@ const ShoppingCartPage = () => {
                 <strong>Total a Pagar:</strong>
                 <span>${totalAmount.toLocaleString("es-CL")}</span>
               </div>
-              {cartItems.length > 0 ? <Button
+              {cartItems.length > 0 ? (<Button
                 className="w-100 mt-3"
                 variant="danger"
                 onClick={handlePaymentConfirmation}
               >
                 Pagar
-              </Button> : <Button
+              </Button>) : (<Button
                 className="w-100 mt-3 disabled"
                 variant="danger"
                 onClick={handlePaymentConfirmation}
               >
                 Carrito Vacío
-              </Button>}
+              </Button>)}
               
             </Card.Body>
           </Card>
