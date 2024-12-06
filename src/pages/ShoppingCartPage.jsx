@@ -25,7 +25,7 @@ const ShoppingCartPage = () => {
 
   const crearOrden = async (cartItems) => {
     console.log(`carItems: ${cartItems}`);
-    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedido",{
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedidos",{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
