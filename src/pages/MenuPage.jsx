@@ -95,6 +95,7 @@ const bebidas = [
 
 useEffect(() => {
   fetchProducts().then((data) => {
+    console.log(data);
     setProducts(data);
   });
 }, []);
