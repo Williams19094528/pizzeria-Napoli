@@ -11,6 +11,16 @@ import pizzaJamonSerranoImage from "../assets/fotos/pizzajamonserrano.jpg";
 import pizzaPeperoniImage from "../assets/fotos/pizzapeperoni.jpg";
 import pizzaQuesoTomateImage from "../assets/fotos/pizzaquesotomate.jpg";
 import bebidaImage from "../assets/fotos/pepsi.jpg";
+import { use } from "react";
+
+
+const fetchProducts = async () => {
+  const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos");
+  const data = await response.json();
+  return data;
+};
+
+const [products, setProducts] = useState([]);
 
 // Definición de productos
 const pizzasNapolitanas = [
@@ -82,6 +92,12 @@ const bebidas = [
   },
 ];
 
+useEffect(() => {
+  fetchProducts().then((data) => {
+    setProducts(data);
+  });
+}, []);
+
 const MenuPage = () => {
   const { cartItems, addToCart } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -96,22 +112,22 @@ const MenuPage = () => {
         <div className="menu-section">
           <h2>Pizzas Napolitanas</h2>
           <div className="menu-items">
-            {pizzasNapolitanas.map((pizza) => (
+            {products.map((pizza) => (
               <div
                 key={pizza.id}
                 className="menu-item"
                 onClick={() => openModal(pizza)}
               >
                 <img
-                  src={pizza.image}
-                  alt={pizza.name}
+                  src={pizza.picture_url}
+                  alt={pizza.nombre}
                   className="menu-item-image"
                 />
                 <div className="menu-item-text">
-                  <h3>{pizza.name}</h3>
-                  <p>{pizza.description}</p>
+                  <h3>{pizza.nombre}</h3>
+                  <p>{pizza.detalle}</p>
                   <div className="price-add">
-                    <span>${pizza.price.toLocaleString("es-CL")}</span>
+                    <span>${pizza.precio.toLocaleString("es-CL")}</span>
                     <button
                       className="add-to-cart-button"
                       onClick={(e) => {

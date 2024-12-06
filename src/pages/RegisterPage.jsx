@@ -10,7 +10,7 @@ import api from "../api";
 const RegistrarUsuario = async (usuario) => {
 
   try {
-    const response = await api.post("/api/crearUsuario", usuario);
+    const response = await api.post("/api/crearUsuario",{timeout: 10000, ...usuario});
     return response;
   } catch (error) {
     return error.response.data;  
@@ -87,7 +87,7 @@ const RegisterPage = () => {
         });
         
     }}).catch((error) => {
-      toast.error(`Error: ${error.response.data.message}`, {
+      toast.error(`Error: ${error}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,
@@ -109,8 +109,10 @@ const RegisterPage = () => {
         <Modal.Header>
           <Modal.Title>Registrando Usuario</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-        <Spinner animation="border" variant="success" />
+        <Modal.Body className="text-center">
+          <div style={{alignItems: "center"}}><Spinner animation="border" variant="primary" /></div>
+        
+        
         </Modal.Body>
         </Modal>
         <Row className="justify-content-center">
