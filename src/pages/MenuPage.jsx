@@ -14,14 +14,10 @@ import bebidaImage from "../assets/fotos/pepsi.jpg";
 import { use } from "react";
 
 
-const fetchProducts = async () => {
-  const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos");
-  const data = await response.json();
-  return data;
-};
+
 //test
 
-const [products, setProducts] = useState([]);
+
 
 // Definición de productos
 const pizzasNapolitanas = [
@@ -93,17 +89,22 @@ const bebidas = [
   },
 ];
 
-useEffect(() => {
-  fetchProducts().then((data) => {
-    console.log(data);
-    setProducts(data);
-  });
-}, []);
+const fetchProducts = async () => {
+  const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos");
+  const data = await response.json();
+  return data;
+};
 
 const MenuPage = () => {
+  useEffect(() => {
+    fetchProducts().then((data) => {
+      console.log(data);
+      setProducts(data);
+    });
+  }, []);
   const { cartItems, addToCart } = useContext(AppContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  const [products, setProducts] = useState([]);
   const openModal = (product) => setSelectedProduct(product);
   const closeModal = () => setSelectedProduct(null);
 
