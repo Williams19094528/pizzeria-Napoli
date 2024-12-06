@@ -63,41 +63,45 @@ const ShoppingCartPage = () => {
   };
 
   const handlePaymentConfirmation = async() => {
-    console.log(`carItems_cdiaz: ${cartItems}`);
-    try{
-      const respuesta = await crearOrden();
-      if(respuesta.status !== 201){
-        toast.error("Error al generar el pedido, por favor intente nuevamente", {
+
+    const data = crearOrden().then((success) => {
+      console.log(success);
+      if (success.status === 201) {
+        toast.success("Orden creada exitosamente", {
           position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
+          autoClose: 3000,
+          hideProgressBar: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          onClose: () => navigate("/"),
         });
       }
-      else{
-        toast.success("Pedido generado exitosamente", {
+      else {
+        toast.error(`Error: ${success}`, {
           position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
+          autoClose: 10000,
+          hideProgressBar: false,
+          theme: "colored",
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
-      setCartItems([]);
-      navigate("/"); 
       }
-    }
-    catch(err){
-      console.log(err);
-      toast.error("Error al generar el pedido, por favor intente nuevamente", {
+    }).catch((error) => {
+      toast.error(`Error: ${error}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,
+        theme: "colored",
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
-    }
-    /*
-    setTimeout(() => {
-      setShowConfirmationModal(false);
-      setCartItems([]);
-      navigate("/"); // Redirige a la página principal después de 5 segundos
-    }, 5000); // Espera 5 segundos antes de redirigir
-    */
+    });
+
   };
 
   return (
