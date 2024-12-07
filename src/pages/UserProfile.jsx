@@ -62,7 +62,9 @@ const UserProfile = () => {
     });
     getUserProfile().then((data) => {
       console.log(data);
+      console.log(data.nombre);
       setUserProfile(data);
+      console.log(`nombre: ${userProfile.nombre}`);
     });
   }, []);
 
