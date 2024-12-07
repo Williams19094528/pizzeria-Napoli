@@ -292,11 +292,8 @@ const AdminPage = () => {
                     <Col md={4} className="mb-4" key={index}>
                       <Card>
                         {prod.id && (
-                          <Card.Img
-                            variant="top"
-                            src={URL.createObjectURL(prod.picture_url)}
-                            alt="Imagen del producto"
-                          />
+                          <Card.Img variant="top" src={prod.picture_url} alt="Imagen del producto" />
+
                         )}
                         <Card.Body>
                           <Card.Title>{prod.partnumber}</Card.Title>
