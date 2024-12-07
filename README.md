@@ -7,14 +7,15 @@ Hito 4 : Integracion con el Frontend y Backend
 Requerimientos:
 
 Requerimientos
-1. Realizar el deploy de la aplicación cliente (vercel)
-   https://pizzeria-napoli.vercel.app/?vercelToolbarCode=rRBuvCrQZpOMaa1
+1. Realizar el deploy de la aplicación cliente 
+2. https://pizzeria-napoli.onrender.com/
 
-3. Realizar el deploy de la aplicación backend.
-4. https://hito-3-desafio-final-g65.onrender.com
+
+4. Realizar el deploy de la aplicación backend.
+5. https://hito-3-desafio-final-g65.onrender.com
    se realizo en render 
 
-5. Realizar el deploy de la base de datos.
+6. Realizar el deploy de la base de datos.
   se realizo en render 
 
 7. Integrar la aplicación cliente con la aplicación backend en producción.
