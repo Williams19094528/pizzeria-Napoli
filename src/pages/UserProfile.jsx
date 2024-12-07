@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const { user, setUser, logout } = useContext(AppContext);
-  const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.username || "");
+
   const [photo, setPhoto] = useState(null);
   const [editing, setEditing] = useState(false);
   const [viewingOrders, setViewingOrders] = useState(false); // Nuevo estado para ver el historial de pedidos
@@ -117,6 +116,7 @@ const UserProfile = () => {
 
   return (
     <Container className="mt-5">
+      <ToastContainer />
       <Row>
         <Col md={4} className="text-center">
           <Card>
