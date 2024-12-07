@@ -60,14 +60,12 @@ const UserProfile = () => {
       console.log(data);
       setOrders(data);
     });
-  }, []);
-
-  useEffect(() => {
     getUserProfile().then((data) => {
       console.log(data);
       setUserProfile(data);
     });
   }, []);
+
 
   const handleSaveChanges = (e) => {
     e.preventDefault();
