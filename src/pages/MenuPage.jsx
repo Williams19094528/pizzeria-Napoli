@@ -100,7 +100,7 @@ const MenuPage = () => {
       <div className="menu-container">
         {/* Pizzas Napolitanas */}
         <div className="menu-section">
-          <h2>Pizzas Napolitanas</h2>
+          <h2>Menu Productos</h2>
           <div className="menu-items">
             {products.map((pizza) => (
               <div

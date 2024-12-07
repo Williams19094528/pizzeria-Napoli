@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, Container, Row, Col, Card, Form } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
 import CreatePostForm from "../components/CreatePostForm";
@@ -25,6 +25,37 @@ const AdminPage = () => {
   const [profileAvatar, setProfileAvatar] = useState(null);
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
+  const [productos, setProductos] = useState([]);
+
+  const fetchProducts = async () => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos");
+    const data = await response.json();
+    return data;
+  };
+  const deleteProduct = async (id) => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/productos/"+id,{
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        
+        },
+    });
+    const data = await response.json();
+    return data;
+  };
+  const getProduct = async (partNumber) => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/producto/"+partNumber);
+    const data = await response.json();
+    return data;
+  };
+  useEffect(() => {
+    fetchProducts().then((data) => {
+      console.log(data);
+      setProductos(data);
+    });
+  }, []);
 
   const handleCreatePost = () => {
     setShowCreatePost(true);
@@ -251,44 +282,41 @@ const AdminPage = () => {
             </Form>
           )}
 
-          {/* Sección de Mis Publicaciones */}
+          {/* Sección de Productos */}
           {showMyPosts && (
             <div>
-              <h4>Mis Publicaciones</h4>
+              <h4>Productos</h4>
               <Row>
-                {posts.length > 0 ? (
-                  posts.map((post, index) => (
+                {productos.length > 0 ? (
+                  productos.map((prod, index) => (
                     <Col md={4} className="mb-4" key={index}>
                       <Card>
-                        {post.photo && (
+                        {prod.id && (
                           <Card.Img
                             variant="top"
-                            src={URL.createObjectURL(post.photo)}
+                            src={URL.createObjectURL(prod.picture_url)}
                             alt="Imagen del producto"
                           />
                         )}
                         <Card.Body>
-                          <Card.Title>{post.productName}</Card.Title>
-                          <Card.Text>{post.description}</Card.Text>
+                          <Card.Title>{prod.partnumber}</Card.Title>
+                          <Card.Text>{prod.nombre}</Card.Text>
+                          <Card.Text>{prod.detalle}</Card.Text>
                           <Card.Text>
-                            <strong>Precio: </strong>${post.price}
-                          </Card.Text>
-                          <Card.Text>
-                            <strong>Fecha: </strong>
-                            {post.date}
+                            <strong>Precio: </strong>${(prod.precio).toLocaleString("es-CL")}
                           </Card.Text>
                           <Button
-                            variant="danger"
-                            onClick={() => deletePost(index)}
+                            variant="primary"
+                            onClick={() => getProduct(prod.partnumber)}
                           >
-                            Eliminar Publicación
+                            Editar Producto
                           </Button>
                         </Card.Body>
                       </Card>
                     </Col>
                   ))
                 ) : (
-                  <p>No tienes publicaciones todavía.</p>
+                  <p>No tienes Productos en Menu.</p>
                 )}
               </Row>
             </div>
