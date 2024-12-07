@@ -45,6 +45,9 @@ const AdminPage = () => {
     const data = await response.json();
     return data;
   };
+
+
+
   const getProduct = async (partNumber) => {
     const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/producto/"+partNumber);
     const data = await response.json();
@@ -187,7 +190,7 @@ const AdminPage = () => {
                 className="w-100 my-2"
                 onClick={handleCreatePost}
               >
-                <FaPlusCircle /> Crear Publicación
+                <FaPlusCircle /> Crear Producto
               </Button>
             </li>
             <li>
