@@ -7,20 +7,40 @@ import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const { user, setUser, logout } = useContext(AppContext);
-  const [name, setName] = useState(user?.username || "");
+  const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.username || "");
   const [photo, setPhoto] = useState(null);
   const [editing, setEditing] = useState(false);
   const [viewingOrders, setViewingOrders] = useState(false); // Nuevo estado para ver el historial de pedidos
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  const [userProfile, setUserProfile] = useState({});
 
-  // Datos simulados para el historial de compras
-  const purchases = [
-    { productName: "Pizza Margherita", date: "15/10/2024", price: "$11.990" },
-    { productName: "Pizza Pepperoni", date: "10/10/2024", price: "$13.990" },
-    { productName: "Pizza Hawaiana", date: "05/10/2024", price: "$12.990" },
-  ];
+  const updateUserProfile = async () => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/profile",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+      body: JSON.stringify(userProfile)
+    });
+    return response;
+  };
+
+  const getUserProfile = async () => {
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/userProfile",{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+    const data = await response.json();
+    return data;
+  };
 
   const verMisPedidos = async () => {
     const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/pedidos",{
@@ -43,30 +63,50 @@ const UserProfile = () => {
     });
   }, []);
 
+  useEffect(() => {
+    getUserProfile().then((data) => {
+      console.log(data);
+      setUserProfile(data);
+    });
+  }, []);
+
   const handleSaveChanges = (e) => {
     e.preventDefault();
-    if (name === "" || email === "") {
-      toast.error("Los campos de nombre y correo son obligatorios", {
+    updateUserProfile().then((success) => {
+      console.log(success);
+      if (success.status === 200) {
+        toast.success("Cambios guardados exitosamente", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      else {
+        toast.error(`Error: ${success}`, {
+          position: "top-center",
+          autoClose: 10000,
+          hideProgressBar: false,
+          theme: "colored",
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }).catch((error) => {
+      toast.error(`Error: ${error}`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,
+        theme: "colored",
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
-      return;
-    }
-
-    const updatedUser = {
-      ...user,
-      name,
-      email,
-      avatar: photo ? URL.createObjectURL(photo) : user?.avatar,
-    };
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    setEditing(false);
-    toast.success("Cambios guardados exitosamente", {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: true,
     });
   };
 
@@ -92,8 +132,8 @@ const UserProfile = () => {
               ) : (
                 <FaUserCircle size={150} className="text-muted mb-3" />
               )}
-              <Card.Title>{name || "Nombre del Usuario"}</Card.Title>
-              <Card.Text>{email || "usuario@ejemplo.com"}</Card.Text>
+              <Card.Title>{userProfile.nombre +"  " + userProfile.apellido || "Nombre del Usuario"}</Card.Title>
+              <Card.Text>{user.username || "usuario@ejemplo.com"}</Card.Text>
               <div className="d-flex justify-content-center gap-2 mt-3">
                 <Button variant="primary" onClick={() => setEditing(!editing)}>
                   {editing ? "Cancelar" : "Editar perfil"}
@@ -119,24 +159,35 @@ const UserProfile = () => {
                 <Form.Control
                   type="text"
                   placeholder="Nombre completo"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={userProfile.nombre}
+                  onChange={(e) => setUserProfile({...userProfile, nombre: e.target.value})}
+                />
+              </Form.Group>
+              <Form.Group controlId="formApellido" className="mt-3">
+                <Form.Label>Apellido</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Apellido"
+                  value={userProfile.apellido}
+                  onChange={(e) => setUserProfile({...userProfile, apellido: e.target.value})}
                 />
               </Form.Group>
               <Form.Group controlId="formEmail" className="mt-3">
-                <Form.Label>Email</Form.Label>
+                <Form.Label>Direccion</Form.Label>
                 <Form.Control
-                  type="email"
-                  placeholder="Correo electrónico"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="textarea"
+                  placeholder="Direccion"
+                  value={userProfile.direccion}
+                  onChange={(e) => setUserProfile({...userProfile, direccion: e.target.value})}
                 />
               </Form.Group>
-              <Form.Group controlId="formPhoto" className="mt-3">
-                <Form.Label>Foto de Perfil (opcional)</Form.Label>
+              <Form.Group controlId="formTelefono" className="mt-3">
+                <Form.Label>Telefono</Form.Label>
                 <Form.Control
-                  type="file"
-                  onChange={(e) => setPhoto(e.target.files[0] || null)}
+                  type="text"
+                  placeholder="Telefono"
+                  value={userProfile.telefono}
+                  onChange={(e) => setUserProfile({...userProfile, telefono: e.target.value})}
                 />
               </Form.Group>
               <Button variant="success" type="submit" className="mt-3">
