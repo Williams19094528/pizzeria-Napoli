@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const { user, setUser, logout } = useContext(AppContext);
-  const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email || "");
+  const [name, setName] = useState(user?.username || "");
+  const [email, setEmail] = useState(user?.username || "");
   const [photo, setPhoto] = useState(null);
   const [editing, setEditing] = useState(false);
   const [viewingOrders, setViewingOrders] = useState(false); // Nuevo estado para ver el historial de pedidos
