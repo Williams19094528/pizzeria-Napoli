@@ -38,7 +38,7 @@ const UserProfile = () => {
         }
     });
     const data = await response.json();
-    return data;
+    return data[0];
   };
 
   const verMisPedidos = async () => {
