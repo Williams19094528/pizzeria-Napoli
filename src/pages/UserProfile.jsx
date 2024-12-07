@@ -17,7 +17,7 @@ const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({});
 
   const updateUserProfile = async () => {
-    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/profile",{
+    const response = await fetch("https://hito-3-desafio-final-g65.onrender.com/api/updateUserProfile",{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
